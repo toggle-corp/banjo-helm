@@ -38,15 +38,17 @@ jobs:
           OCI_REPO: oci://ghcr.io/${{ github.repository_owner }}
         shell: bash
         run: |
-          OCI_REPO=$(echo $OCI_REPO | tr '[:upper:]' '[:lower:]')
+          OCI_REPO=$(echo "$OCI_REPO" | tr '[:upper:]' '[:lower:]')
 
           # Helm
           HELM_TARGET_REVISION=$(helm show chart ./chart/ | grep '^version:' | awk '{print $2}')
           HELM_CHART=$(helm show chart ./chart/ | grep '^name:' | awk '{print $2}')
 
-          echo "helm_oci_repo=$OCI_REPO" >> $GITHUB_OUTPUT
-          echo "helm_chart=$HELM_CHART" >> $GITHUB_OUTPUT
-          echo "helm_target_revision=$HELM_TARGET_REVISION" >> $GITHUB_OUTPUT
+          {
+            echo "helm_oci_repo=$OCI_REPO"
+            echo "helm_chart=$HELM_CHART"
+            echo "helm_target_revision=$HELM_TARGET_REVISION"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -82,15 +84,17 @@ jobs:
           HELM_TARGET_REVISION: "${{ steps.prep.outputs.helm_target_revision }}"
         run: |
           PACKAGE_FILE=$(ls ./chart/.helm-charts/*.tgz | head -n 1)
-          echo "# Helm Chart" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo '```yaml' >> $GITHUB_STEP_SUMMARY
-          helm push "$PACKAGE_FILE" $OCI_REPO 2>> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          echo "> [!Important]" >> $GITHUB_STEP_SUMMARY
-          echo "> Helm Repo: **$OCI_REPO**" >> $GITHUB_STEP_SUMMARY
-          echo "> Helm Chart: **$HELM_CHART**" >> $GITHUB_STEP_SUMMARY
-          echo "> Helm Target Revision: **$HELM_TARGET_REVISION**" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "# Helm Chart"
+            echo ""
+            echo '```yaml'
+            helm push "$PACKAGE_FILE" "$OCI_REPO" 2>&1
+            echo '```'
+            echo "> [!Important]"
+            echo "> Helm Repo: **$OCI_REPO**"
+            echo "> Helm Chart: **$HELM_CHART**"
+            echo "> Helm Target Revision: **$HELM_TARGET_REVISION**"
+          } >> "$GITHUB_STEP_SUMMARY"
 
           # Add annotations as well (This is shown in reverse order)
           echo "::notice::Helm Target Revision: $HELM_TARGET_REVISION"
