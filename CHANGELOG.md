@@ -1,102 +1,124 @@
 # Changelog
 
-## [0.2.5](https://github.com/toggle-corp/toggle-django-helm/compare/0.2.4..0.2.5) - 2025-11-26
+## [0.2.6](https://github.com/toggle-corp/banjo-helm/compare/0.2.5..0.2.6) - 2026-04-06
 ### Changes:
 
 #### 🚀  Features
 
-- Allow additional env config per hooks - ([eb8d4ef](https://github.com/toggle-corp/toggle-django-helm/commit/eb8d4efb34d10ae7c32fc2905c4c009999b47371))
-
-
-## [0.2.4](https://github.com/toggle-corp/toggle-django-helm/compare/0.2.3..0.2.4) - 2025-11-19
-### Changes:
-
-#### 🚀  Features
-
-- Remove default resources for default worker - ([f1daa41](https://github.com/toggle-corp/toggle-django-helm/commit/f1daa418aa55028b8100f209d135028842dbf7ed))
-- Add env per worker - ([0f28a8f](https://github.com/toggle-corp/toggle-django-helm/commit/0f28a8ffcffab8b41dd17156481ec01d6f26d4ce))
-- Support string in extra-manifests - ([092e4c3](https://github.com/toggle-corp/toggle-django-helm/commit/092e4c3b5d91ff06eb2b0314cbe11cfb26aa00ef))
-- Add script to generate values-tests snapshot - ([2197491](https://github.com/toggle-corp/toggle-django-helm/commit/21974918d36b396a3d707548eb96675d256c745f))
-
-#### 🐛 Bug Fixes
-
-- Use bitnamilegacy images - ([8a79c58](https://github.com/toggle-corp/toggle-django-helm/commit/8a79c58c237f02bcc5b8f72bfe6b0077a2d1f569))
+- *(ci)* Add submodules true condition - ([7de8cdf](https://github.com/toggle-corp/banjo-helm/commit/7de8cdf3f34f0d03669066f1ccbc4d99e94a2481))
+- *(fugit)* Add fugit submodule - ([a84eed5](https://github.com/toggle-corp/banjo-helm/commit/a84eed581ae765d895caa91e17ccdf7c835040da))
+- *(replicas)* Change the replicacount condition. - ([af27a8f](https://github.com/toggle-corp/banjo-helm/commit/af27a8f0e72025625e42a88651fa3285da8c0a46))
+- Update chart name to banjo-helm - ([746702f](https://github.com/toggle-corp/banjo-helm/commit/746702fcb26cf661a8b3ede97d0ba60c14b100b4))
+- Integrate release with fugit - ([6f18a00](https://github.com/toggle-corp/banjo-helm/commit/6f18a007cf9712eace474d9cdafb2e69ba5a4f5d))
 
 #### ⚙️ Miscellaneous Tasks
 
-- Rename toggle-django-helm dir to chart - ([b42ffff](https://github.com/toggle-corp/toggle-django-helm/commit/b42ffffaac028d9411708d75b318836132bfb198))
+- *(tests)* Update the tests and values. - ([6c1af5d](https://github.com/toggle-corp/banjo-helm/commit/6c1af5d7c14ea16ecec8e5317557363c181efbf5))
 
+### 🍻 Pull Requests (1)
+- (#7) [Add fugit submodule](https://github.com/toggle-corp/banjo-helm/pull/7)
 
-## [0.2.3](https://github.com/toggle-corp/toggle-django-helm/compare/0.2.2..0.2.3) - 2025-11-14
+### :tada: New Contributors (1)
+
+- [@sandeshit](https://github.com/sandeshit) made their first contribution
+
+## [0.2.5](https://github.com/toggle-corp/banjo-helm/compare/0.2.4..0.2.5) - 2025-11-26
 ### Changes:
 
 #### 🚀  Features
 
-- Fix missing ingress tls configuration - ([ece5ff7](https://github.com/toggle-corp/toggle-django-helm/commit/ece5ff7fe593cd660834b81135ec42f1c540960f))
+- Allow additional env config per hooks - ([eb8d4ef](https://github.com/toggle-corp/banjo-helm/commit/eb8d4efb34d10ae7c32fc2905c4c009999b47371))
 
 
-## [0.2.2](https://github.com/toggle-corp/toggle-django-helm/compare/0.2.1..0.2.2) - 2025-11-14
+## [0.2.4](https://github.com/toggle-corp/banjo-helm/compare/0.2.3..0.2.4) - 2025-11-19
 ### Changes:
 
 #### 🚀  Features
 
-- Add imagePullSecrets - ([ab45bd1](https://github.com/toggle-corp/toggle-django-helm/commit/ab45bd1784e114d69f5f70794f825967f47741b1))
-- Add secretsStoreCsiDriver integration (usages in azure) - ([734157e](https://github.com/toggle-corp/toggle-django-helm/commit/734157eef9d1b0e604ef8511950a6cba27dc068f))
-- Add podVolumes and podVolumeMounts - ([ad099b9](https://github.com/toggle-corp/toggle-django-helm/commit/ad099b9514b448689392f5b6ad807bc9f77c137c))
-- Add podLabels and podAnnotations - ([97c3c97](https://github.com/toggle-corp/toggle-django-helm/commit/97c3c973528ee3915cc144a388bc0d1fc1c37af7))
-- Add service-account - ([674052b](https://github.com/toggle-corp/toggle-django-helm/commit/674052b52446f20828071fb4828475564f590379))
+- Remove default resources for default worker - ([f1daa41](https://github.com/toggle-corp/banjo-helm/commit/f1daa418aa55028b8100f209d135028842dbf7ed))
+- Add env per worker - ([0f28a8f](https://github.com/toggle-corp/banjo-helm/commit/0f28a8ffcffab8b41dd17156481ec01d6f26d4ce))
+- Support string in extra-manifests - ([092e4c3](https://github.com/toggle-corp/banjo-helm/commit/092e4c3b5d91ff06eb2b0314cbe11cfb26aa00ef))
+- Add script to generate values-tests snapshot - ([2197491](https://github.com/toggle-corp/banjo-helm/commit/21974918d36b396a3d707548eb96675d256c745f))
 
 #### 🐛 Bug Fixes
 
-- Reloader.stakater.com annotations placement - ([16c5976](https://github.com/toggle-corp/toggle-django-helm/commit/16c5976c7fa78362e1ef3090c3342ae6646ec9d7))
+- Use bitnamilegacy images - ([8a79c58](https://github.com/toggle-corp/banjo-helm/commit/8a79c58c237f02bcc5b8f72bfe6b0077a2d1f569))
+
+#### ⚙️ Miscellaneous Tasks
+
+- Rename toggle-django-helm dir to chart - ([b42ffff](https://github.com/toggle-corp/banjo-helm/commit/b42ffffaac028d9411708d75b318836132bfb198))
+
+
+## [0.2.3](https://github.com/toggle-corp/banjo-helm/compare/0.2.2..0.2.3) - 2025-11-14
+### Changes:
+
+#### 🚀  Features
+
+- Fix missing ingress tls configuration - ([ece5ff7](https://github.com/toggle-corp/banjo-helm/commit/ece5ff7fe593cd660834b81135ec42f1c540960f))
+
+
+## [0.2.2](https://github.com/toggle-corp/banjo-helm/compare/0.2.1..0.2.2) - 2025-11-14
+### Changes:
+
+#### 🚀  Features
+
+- Add imagePullSecrets - ([ab45bd1](https://github.com/toggle-corp/banjo-helm/commit/ab45bd1784e114d69f5f70794f825967f47741b1))
+- Add secretsStoreCsiDriver integration (usages in azure) - ([734157e](https://github.com/toggle-corp/banjo-helm/commit/734157eef9d1b0e604ef8511950a6cba27dc068f))
+- Add podVolumes and podVolumeMounts - ([ad099b9](https://github.com/toggle-corp/banjo-helm/commit/ad099b9514b448689392f5b6ad807bc9f77c137c))
+- Add podLabels and podAnnotations - ([97c3c97](https://github.com/toggle-corp/banjo-helm/commit/97c3c973528ee3915cc144a388bc0d1fc1c37af7))
+- Add service-account - ([674052b](https://github.com/toggle-corp/banjo-helm/commit/674052b52446f20828071fb4828475564f590379))
+
+#### 🐛 Bug Fixes
+
+- Reloader.stakater.com annotations placement - ([16c5976](https://github.com/toggle-corp/banjo-helm/commit/16c5976c7fa78362e1ef3090c3342ae6646ec9d7))
 
 #### 📚 Documentation
 
-- Update comments - ([248b117](https://github.com/toggle-corp/toggle-django-helm/commit/248b1172704715b856b815d35af8e910fd061d96))
+- Update comments - ([248b117](https://github.com/toggle-corp/banjo-helm/commit/248b1172704715b856b815d35af8e910fd061d96))
 
 ### 🍻 Pull Requests (1)
-- (#2) [Feat/azure integration](https://github.com/toggle-corp/toggle-django-helm/pull/2)
+- (#2) [Feat/azure integration](https://github.com/toggle-corp/banjo-helm/pull/2)
 
 
-## [0.2.1](https://github.com/toggle-corp/toggle-django-helm/compare/0.2.0..0.2.1) - 2025-11-12
+## [0.2.1](https://github.com/toggle-corp/banjo-helm/compare/0.2.0..0.2.1) - 2025-11-12
 ### Changes:
 
 #### 🚀  Features
 
-- Allow object for extraManifests - ([6788496](https://github.com/toggle-corp/toggle-django-helm/commit/678849685143f224d03a5416d7e68afc83a88af3))
+- Allow object for extraManifests - ([6788496](https://github.com/toggle-corp/banjo-helm/commit/678849685143f224d03a5416d7e68afc83a88af3))
 
 #### ⚙️ Miscellaneous Tasks
 
-- Revamp release.sh - ([4a9a655](https://github.com/toggle-corp/toggle-django-helm/commit/4a9a6558abc03f8fcc852fdaae4b30631cefa14b))
+- Revamp release.sh - ([4a9a655](https://github.com/toggle-corp/banjo-helm/commit/4a9a6558abc03f8fcc852fdaae4b30631cefa14b))
 
 ### 🍻 Pull Requests (1)
-- (#1) [Feat: allow object for extraManifests](https://github.com/toggle-corp/toggle-django-helm/pull/1)
+- (#1) [Feat: allow object for extraManifests](https://github.com/toggle-corp/banjo-helm/pull/1)
 
 
-## [0.2.0](https://github.com/toggle-corp/toggle-django-helm/compare/0.1.0-dev1..0.2.0) - 2025-08-20
+## [0.2.0](https://github.com/toggle-corp/banjo-helm/compare/0.1.0-dev1..0.2.0) - 2025-08-20
 ### Changes:
 
 #### 🚀  Features
 
-- *(cronjob)* Add timeZone support - ([14a74d6](https://github.com/toggle-corp/toggle-django-helm/commit/14a74d6487a23f5bc2aaa4d580e3457cbab892df))
-- *(django)* Use _helpers for same configurations - ([b4f5f3d](https://github.com/toggle-corp/toggle-django-helm/commit/b4f5f3d7d79b92f7f80e060575dcc99b7268624b))
-- Add extraManifests - ([19e2bca](https://github.com/toggle-corp/toggle-django-helm/commit/19e2bca73ed3e3da9c393682fe729e8b1702da23))
+- *(cronjob)* Add timeZone support - ([14a74d6](https://github.com/toggle-corp/banjo-helm/commit/14a74d6487a23f5bc2aaa4d580e3457cbab892df))
+- *(django)* Use _helpers for same configurations - ([b4f5f3d](https://github.com/toggle-corp/banjo-helm/commit/b4f5f3d7d79b92f7f80e060575dcc99b7268624b))
+- Add extraManifests - ([19e2bca](https://github.com/toggle-corp/banjo-helm/commit/19e2bca73ed3e3da9c393682fe729e8b1702da23))
 
 #### ⚙️ Miscellaneous Tasks
 
-- *(django-app)* Add annotation on api ingress - ([d850435](https://github.com/toggle-corp/toggle-django-helm/commit/d8504350574c01aa85eb08462f4be5b67b285be9))
-- *(release)* Git-cliff setup - ([4a02be0](https://github.com/toggle-corp/toggle-django-helm/commit/4a02be0e59576f1e90a5909178434f4a84ed7278))
-- Rename django-app -> toggle-django-helm - ([6ca9016](https://github.com/toggle-corp/toggle-django-helm/commit/6ca9016b28e27ebb43272b7ff8954a069fb18c33))
-- Remove react-serve - ([9181f3e](https://github.com/toggle-corp/toggle-django-helm/commit/9181f3eacbc33ac8a1eca4addb879e19131d7cf1))
+- *(django-app)* Add annotation on api ingress - ([d850435](https://github.com/toggle-corp/banjo-helm/commit/d8504350574c01aa85eb08462f4be5b67b285be9))
+- *(release)* Git-cliff setup - ([4a02be0](https://github.com/toggle-corp/banjo-helm/commit/4a02be0e59576f1e90a5909178434f4a84ed7278))
+- Rename django-app -> toggle-django-helm - ([6ca9016](https://github.com/toggle-corp/banjo-helm/commit/6ca9016b28e27ebb43272b7ff8954a069fb18c33))
+- Remove react-serve - ([9181f3e](https://github.com/toggle-corp/banjo-helm/commit/9181f3eacbc33ac8a1eca4addb879e19131d7cf1))
 
 #### Django-app
 
-- Add support for extraEnvVars - ([6b789f6](https://github.com/toggle-corp/toggle-django-helm/commit/6b789f69896f559b99be6cf4ea1acad1278e0df0))
-- Use _helpers for deployment annotations - ([15f8cc0](https://github.com/toggle-corp/toggle-django-helm/commit/15f8cc0448fa06ceb8bdb62921fb347485488a2c))
+- Add support for extraEnvVars - ([6b789f6](https://github.com/toggle-corp/banjo-helm/commit/6b789f69896f559b99be6cf4ea1acad1278e0df0))
+- Use _helpers for deployment annotations - ([15f8cc0](https://github.com/toggle-corp/banjo-helm/commit/15f8cc0448fa06ceb8bdb62921fb347485488a2c))
 
 #### React-server
 
-- Add checksum in deployment for config change - ([baa0e01](https://github.com/toggle-corp/toggle-django-helm/commit/baa0e01d590923342499012b0c941c8d3ad3d8b4))
+- Add checksum in deployment for config change - ([baa0e01](https://github.com/toggle-corp/banjo-helm/commit/baa0e01d590923342499012b0c941c8d3ad3d8b4))
 
 ### :tada: New Contributors (1)
 
