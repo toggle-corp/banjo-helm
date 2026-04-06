@@ -65,6 +65,7 @@ minio:
 # NOTE: To change bucket name look at defaultBuckets and provisioning.extraCommands
 
 api:
+  replicaCount: 0
   resources:
     requests:
       cpu: "0.2"
@@ -85,6 +86,7 @@ worker:
   queues:
     # NOTE: Make sure keys are lowercase
     default:
+      replicaCount: 0
       env:
         USER_PROXY_SERVER_REF: PROXY_1
         USER_PROXY_SERVER_REF2: PROXY_2

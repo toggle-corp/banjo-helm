@@ -127,7 +127,6 @@ api:
     # imagePullPolicy: IfNotPresent
     # imagePullSecrets:
   enabled: true
-  replicaCount: 1
   containerPort: 80
   command: ["/code/deploy/run_prod.sh"]
   resources:
@@ -193,7 +192,6 @@ worker:
     # NOTE: Make sure keys are lowercase
     default:
       enabled: true
-      replicaCount: 1
       celeryArgs:
         - "-Q"
         - "celery"

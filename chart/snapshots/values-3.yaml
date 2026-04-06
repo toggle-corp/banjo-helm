@@ -843,7 +843,6 @@ metadata:
     environment: ALPHA
     release: release-name
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: release-name-toggle-django-helm
@@ -1014,7 +1013,6 @@ metadata:
     environment: ALPHA
     release: release-name
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: release-name-toggle-django-helm

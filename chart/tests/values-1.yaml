@@ -65,6 +65,7 @@ worker:
   queues:
     # NOTE: Make sure keys are lowercase
     default:
+      replicaCount: 1
       resources:
         requests:
           cpu: "0.1"
