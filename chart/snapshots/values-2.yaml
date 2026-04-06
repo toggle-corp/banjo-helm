@@ -1,5 +1,5 @@
 ---
-# Source: toggle-django-helm/charts/minio/templates/networkpolicy.yaml
+# Source: banjo-helm/charts/minio/templates/networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -27,7 +27,7 @@ spec:
         - port: 9001
         - port: 9000
 ---
-# Source: toggle-django-helm/charts/minio/templates/provisioning-networkpolicy.yaml
+# Source: banjo-helm/charts/minio/templates/provisioning-networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -50,7 +50,7 @@ spec:
     - {}
   ingress:
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/primary/networkpolicy.yaml
+# Source: banjo-helm/charts/postgresql/templates/primary/networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -78,7 +78,7 @@ spec:
     - ports:
         - port: 5432
 ---
-# Source: toggle-django-helm/charts/redis/templates/networkpolicy.yaml
+# Source: banjo-helm/charts/redis/templates/networkpolicy.yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -105,7 +105,7 @@ spec:
     - ports:
         - port: 6379
 ---
-# Source: toggle-django-helm/charts/minio/templates/pdb.yaml
+# Source: banjo-helm/charts/minio/templates/pdb.yaml
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -124,7 +124,7 @@ spec:
       app.kubernetes.io/instance: release-name
       app.kubernetes.io/name: minio
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/primary/pdb.yaml
+# Source: banjo-helm/charts/postgresql/templates/primary/pdb.yaml
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -145,7 +145,7 @@ spec:
       app.kubernetes.io/name: postgresql
       app.kubernetes.io/component: primary
 ---
-# Source: toggle-django-helm/charts/redis/templates/master/pdb.yaml
+# Source: banjo-helm/charts/redis/templates/master/pdb.yaml
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
@@ -166,7 +166,7 @@ spec:
       app.kubernetes.io/name: redis
       app.kubernetes.io/component: master
 ---
-# Source: toggle-django-helm/charts/minio/templates/serviceaccount.yaml
+# Source: banjo-helm/charts/minio/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -182,7 +182,7 @@ automountServiceAccountToken: false
 secrets:
   - name: my-app-minio
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/serviceaccount.yaml
+# Source: banjo-helm/charts/postgresql/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -196,7 +196,7 @@ metadata:
     helm.sh/chart: postgresql-16.4.5
 automountServiceAccountToken: false
 ---
-# Source: toggle-django-helm/charts/redis/templates/master/serviceaccount.yaml
+# Source: banjo-helm/charts/redis/templates/master/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 automountServiceAccountToken: false
@@ -210,14 +210,14 @@ metadata:
     app.kubernetes.io/version: 7.4.2
     helm.sh/chart: redis-20.6.3
 ---
-# Source: toggle-django-helm/templates/api/service-account.yaml
+# Source: banjo-helm/templates/api/service-account.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: release-name-toggle-django-helm
+  name: release-name-banjo-helm
 automountServiceAccountToken: true
 ---
-# Source: toggle-django-helm/charts/minio/templates/secrets.yaml
+# Source: banjo-helm/charts/minio/templates/secrets.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -234,7 +234,7 @@ data:
   root-user: "bWluaW8tdXNlcg=="
   root-password: "cmFuZG9tLXN0cm9uZy1wYXNzd29yZA=="
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/secrets.yaml
+# Source: banjo-helm/charts/postgresql/templates/secrets.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -251,7 +251,7 @@ data:
   postgres-password: "cmFuZG9tLXN0cm9uZy1wYXNzd29yZA=="
   # We don't auto-generate LDAP password when it's not provided as we do for other passwords
 ---
-# Source: toggle-django-helm/charts/minio/templates/provisioning-configmap.yaml
+# Source: banjo-helm/charts/minio/templates/provisioning-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -266,7 +266,7 @@ metadata:
     app.kubernetes.io/component: minio-provisioning
 data:
 ---
-# Source: toggle-django-helm/charts/redis/templates/configmap.yaml
+# Source: banjo-helm/charts/redis/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -299,7 +299,7 @@ data:
     rename-command FLUSHALL ""
     # End of replica configuration
 ---
-# Source: toggle-django-helm/charts/redis/templates/health-configmap.yaml
+# Source: banjo-helm/charts/redis/templates/health-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -407,7 +407,7 @@ data:
     "$script_dir/ping_liveness_master.sh" $1 || exit_status=$?
     exit $exit_status
 ---
-# Source: toggle-django-helm/charts/redis/templates/scripts-configmap.yaml
+# Source: banjo-helm/charts/redis/templates/scripts-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -436,20 +436,20 @@ data:
     ARGS+=("--include" "/opt/bitnami/redis/etc/master.conf")
     exec redis-server "${ARGS[@]}"
 ---
-# Source: toggle-django-helm/templates/config/configmap.yaml
+# Source: banjo-helm/templates/config/configmap.yaml
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: release-name-toggle-django-helm-env-name
+  name: release-name-banjo-helm-env-name
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     environment: ALPHA
     release: release-name
 data:
   # Configs
   ENV_1: "VALUE_1"
 ---
-# Source: toggle-django-helm/charts/minio/templates/pvc.yaml
+# Source: banjo-helm/charts/minio/templates/pvc.yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -469,7 +469,7 @@ spec:
       storage: "2Gi"
   storageClassName: longhorn
 ---
-# Source: toggle-django-helm/charts/minio/templates/service.yaml
+# Source: banjo-helm/charts/minio/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -496,7 +496,7 @@ spec:
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/name: minio
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/primary/svc-headless.yaml
+# Source: banjo-helm/charts/postgresql/templates/primary/svc-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -526,7 +526,7 @@ spec:
     app.kubernetes.io/name: postgresql
     app.kubernetes.io/component: primary
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/primary/svc.yaml
+# Source: banjo-helm/charts/postgresql/templates/primary/svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -552,7 +552,7 @@ spec:
     app.kubernetes.io/name: postgresql
     app.kubernetes.io/component: primary
 ---
-# Source: toggle-django-helm/charts/redis/templates/headless-svc.yaml
+# Source: banjo-helm/charts/redis/templates/headless-svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -575,7 +575,7 @@ spec:
     app.kubernetes.io/instance: release-name
     app.kubernetes.io/name: redis
 ---
-# Source: toggle-django-helm/charts/redis/templates/master/service.yaml
+# Source: banjo-helm/charts/redis/templates/master/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -602,47 +602,47 @@ spec:
     app.kubernetes.io/name: redis
     app.kubernetes.io/component: master
 ---
-# Source: toggle-django-helm/templates/api/service.yaml
+# Source: banjo-helm/templates/api/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-toggle-django-helm-api
+  name: release-name-banjo-helm-api
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: api
     environment: ALPHA
     release: release-name
 spec:
   type: ClusterIP
   selector:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: api
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
 ---
-# Source: toggle-django-helm/templates/celery-flower/service.yaml
+# Source: banjo-helm/templates/celery-flower/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: release-name-toggle-django-helm-celery-flower
+  name: release-name-banjo-helm-celery-flower
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: celery-flower
     environment: ALPHA
     release: release-name
 spec:
   type: ClusterIP
   selector:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: worker-flower
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8000
 ---
-# Source: toggle-django-helm/charts/minio/templates/standalone/deployment.yaml
+# Source: banjo-helm/charts/minio/templates/standalone/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -794,15 +794,15 @@ spec:
           persistentVolumeClaim:
             claimName: my-app-minio
 ---
-# Source: toggle-django-helm/templates/api/deployment.yaml
+# Source: banjo-helm/templates/api/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-toggle-django-helm-api
+  name: release-name-banjo-helm-api
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: api
     environment: ALPHA
     release: release-name
@@ -810,35 +810,35 @@ spec:
   replicas: 0
   selector:
     matchLabels:
-      app: release-name-toggle-django-helm
+      app: release-name-banjo-helm
       component: api
   template:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: api
         azure.workload.identity/use: "true"
     spec:
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: api
           image: "ghcr.io/example/example:v1.0.1"
@@ -861,11 +861,11 @@ spec:
               memory: 0.5Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -877,22 +877,22 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/celery-flower/deployment.yaml
+# Source: banjo-helm/templates/celery-flower/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-toggle-django-helm-celery-flower
+  name: release-name-banjo-helm-celery-flower
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: worker-flower
     environment: ALPHA
     release: release-name
@@ -900,35 +900,35 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: release-name-toggle-django-helm
+      app: release-name-banjo-helm
       component: worker-flower
   template:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: worker-flower
         azure.workload.identity/use: "true"
     spec:
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: worker
           image: "ghcr.io/example/example:v1.0.1"
@@ -951,11 +951,11 @@ spec:
               memory: 0.5Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -967,22 +967,22 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/worker-beat/deployment.yaml
+# Source: banjo-helm/templates/worker-beat/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-toggle-django-helm-worker-beat
+  name: release-name-banjo-helm-worker-beat
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: worker-beat
     environment: ALPHA
     release: release-name
@@ -990,35 +990,35 @@ spec:
   replicas: 1  # This should only 1
   selector:
     matchLabels:
-      app: release-name-toggle-django-helm
+      app: release-name-banjo-helm
       component: worker-beat
   template:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: worker-beat
         azure.workload.identity/use: "true"
     spec:
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: worker-beat
           image: "ghcr.io/example/example:v1.0.1"
@@ -1042,11 +1042,11 @@ spec:
               memory: 0.5Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1058,23 +1058,23 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/worker/deployment.yaml
+# Source: banjo-helm/templates/worker/deployment.yaml
 # Queue: default
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: release-name-toggle-django-helm-worker-default
+  name: release-name-banjo-helm-worker-default
   annotations:
     reloader.stakater.com/auto: "true"
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: worker
     queue: default
     environment: ALPHA
@@ -1083,37 +1083,37 @@ spec:
   replicas: 0
   selector:
     matchLabels:
-      app: release-name-toggle-django-helm
+      app: release-name-banjo-helm
       component: worker
       queue: default
   template:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: worker
         queue: default
         azure.workload.identity/use: "true"
     spec:
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: worker
           command:
@@ -1143,11 +1143,11 @@ spec:
               memory: 1Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1163,14 +1163,14 @@ spec:
             - name: USER_PROXY_SERVER_REF2
               value: "PROXY_2"
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/charts/postgresql/templates/primary/statefulset.yaml
+# Source: banjo-helm/charts/postgresql/templates/primary/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -1353,7 +1353,7 @@ spec:
             storage: "2Gi"
         storageClassName: longhorn
 ---
-# Source: toggle-django-helm/charts/redis/templates/master/application.yaml
+# Source: banjo-helm/charts/redis/templates/master/application.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -1530,12 +1530,12 @@ spec:
             storage: ".5Gi"
         storageClassName: longhorn
 ---
-# Source: toggle-django-helm/templates/argo-hooks/hook-job.yaml
+# Source: banjo-helm/templates/argo-hooks/hook-job.yaml
 # Hook: collect-static
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: release-name-toggle-django-helm-collect-static
+  name: release-name-banjo-helm-collect-static
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
@@ -1543,30 +1543,30 @@ spec:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: argo-hooks
         azure.workload.identity/use: "true"
     spec:
       restartPolicy: "Never"
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: collect-static
           image: "ghcr.io/example/example:v1.0.1"
@@ -1586,11 +1586,11 @@ spec:
               memory: 1Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1602,19 +1602,19 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/argo-hooks/hook-job.yaml
+# Source: banjo-helm/templates/argo-hooks/hook-job.yaml
 # Hook: db-migrate
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: release-name-toggle-django-helm-db-migrate-
+  generateName: release-name-banjo-helm-db-migrate-
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
@@ -1622,30 +1622,30 @@ spec:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: argo-hooks
         azure.workload.identity/use: "true"
     spec:
       restartPolicy: "Never"
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: db-migrate
           image: "ghcr.io/example/example:v1.0.1"
@@ -1664,11 +1664,11 @@ spec:
               memory: 1Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1680,19 +1680,19 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/argo-hooks/hook-job.yaml
+# Source: banjo-helm/templates/argo-hooks/hook-job.yaml
 # Hook: my-another-custom-command
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: release-name-toggle-django-helm-my-another-custom-command-
+  generateName: release-name-banjo-helm-my-another-custom-command-
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
@@ -1700,30 +1700,30 @@ spec:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: argo-hooks
         azure.workload.identity/use: "true"
     spec:
       restartPolicy: "Never"
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: my-another-custom-command
           image: "ghcr.io/example/example:v1.0.1"
@@ -1744,11 +1744,11 @@ spec:
               memory: 1Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1760,19 +1760,19 @@ spec:
                   key: special.how
                   name: special-config
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/argo-hooks/hook-job.yaml
+# Source: banjo-helm/templates/argo-hooks/hook-job.yaml
 # Hook: my-custom-command
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: release-name-toggle-django-helm-my-custom-command-
+  generateName: release-name-banjo-helm-my-custom-command-
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
@@ -1780,30 +1780,30 @@ spec:
     metadata:
       annotations:
         checksum/secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
-        checksum/configmap: de0584c99be865e5e466cd78f1d852c5941906498c945aded88f9c23ada87de0
+        checksum/configmap: 3f5505b0f56b1094e754509a8dd06e18d87db0905c755ea4b4ab0cc647f29da3
         aws.workload.identity/use: "true"
         aws.workload.identity/use2: "true"
         aws.workload.identity/use3: "true"
       labels:
-        app: release-name-toggle-django-helm
+        app: release-name-banjo-helm
         component: argo-hooks
         azure.workload.identity/use: "true"
     spec:
       restartPolicy: "Never"
       volumes:
-        - name: release-name-toggle-django-helm-secret
+        - name: release-name-banjo-helm-secret
           csi:
             driver: "secrets-store.csi.k8s.io"
             readOnly: true
             volumeAttributes:
-              secretProviderClass: release-name-toggle-django-helm-secret-provider
+              secretProviderClass: release-name-banjo-helm-secret-provider
         - csi:
             driver: secrets-store.csi.k8s.io
             readOnly: "true"
             volumeAttributes:
               secretProviderClass: my-secret-provider
           name: my-stuff
-      serviceAccountName: release-name-toggle-django-helm
+      serviceAccountName: release-name-banjo-helm
       containers:
         - name: my-custom-command
           image: "ghcr.io/example/example:v1.0.1"
@@ -1824,11 +1824,11 @@ spec:
               memory: 1Gi
           envFrom:
             - secretRef:
-                name: release-name-toggle-django-helm-secret
+                name: release-name-banjo-helm-secret
             - secretRef:
                 name: my-custom-secrets
             - configMapRef:
-                name: release-name-toggle-django-helm-env-name
+                name: release-name-banjo-helm-env-name
             - configMapRef:
                 name: my-custom-envs
           env:
@@ -1844,21 +1844,21 @@ spec:
             - name: KEY_2
               value: "VALUE_2"
           volumeMounts:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               mountPath: /mnt/secrets-store
               readOnly: true
             - mountPath: /mnt/secrets-store
               name: my-secret
               readOnly: true
 ---
-# Source: toggle-django-helm/templates/cronjobs/deployment.yaml
+# Source: banjo-helm/templates/cronjobs/deployment.yaml
 # Job: dummy-01
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: release-name-toggle-django-helm-job-dummy-01
+  name: release-name-banjo-helm-job-dummy-01
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: cronjob
     jobName: dummy-01
     environment: ALPHA
@@ -1875,26 +1875,26 @@ spec:
           aws.workload.identity/use2: "true"
           aws.workload.identity/use3: "true"
         labels:
-          app: release-name-toggle-django-helm
+          app: release-name-banjo-helm
           component: cronjob
           azure.workload.identity/use: "true"
       template:
         spec:
           restartPolicy: "Never"
           volumes:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               csi:
                 driver: "secrets-store.csi.k8s.io"
                 readOnly: true
                 volumeAttributes:
-                  secretProviderClass: release-name-toggle-django-helm-secret-provider
+                  secretProviderClass: release-name-banjo-helm-secret-provider
             - csi:
                 driver: secrets-store.csi.k8s.io
                 readOnly: "true"
                 volumeAttributes:
                   secretProviderClass: my-secret-provider
               name: my-stuff
-          serviceAccountName: release-name-toggle-django-helm
+          serviceAccountName: release-name-banjo-helm
           containers:
             - name: cronjob
               command:
@@ -1914,11 +1914,11 @@ spec:
                   memory: 4Gi
               envFrom:
                 - secretRef:
-                    name: release-name-toggle-django-helm-secret
+                    name: release-name-banjo-helm-secret
                 - secretRef:
                     name: my-custom-secrets
                 - configMapRef:
-                    name: release-name-toggle-django-helm-env-name
+                    name: release-name-banjo-helm-env-name
                 - configMapRef:
                     name: my-custom-envs
               env:
@@ -1930,21 +1930,21 @@ spec:
                       key: special.how
                       name: special-config
               volumeMounts:
-                - name: release-name-toggle-django-helm-secret
+                - name: release-name-banjo-helm-secret
                   mountPath: /mnt/secrets-store
                   readOnly: true
                 - mountPath: /mnt/secrets-store
                   name: my-secret
                   readOnly: true
 ---
-# Source: toggle-django-helm/templates/cronjobs/deployment.yaml
+# Source: banjo-helm/templates/cronjobs/deployment.yaml
 # Job: dummy-02
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: release-name-toggle-django-helm-job-dummy-02
+  name: release-name-banjo-helm-job-dummy-02
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: cronjob
     jobName: dummy-02
     environment: ALPHA
@@ -1962,26 +1962,26 @@ spec:
           aws.workload.identity/use2: "true"
           aws.workload.identity/use3: "true"
         labels:
-          app: release-name-toggle-django-helm
+          app: release-name-banjo-helm
           component: cronjob
           azure.workload.identity/use: "true"
       template:
         spec:
           restartPolicy: "Never"
           volumes:
-            - name: release-name-toggle-django-helm-secret
+            - name: release-name-banjo-helm-secret
               csi:
                 driver: "secrets-store.csi.k8s.io"
                 readOnly: true
                 volumeAttributes:
-                  secretProviderClass: release-name-toggle-django-helm-secret-provider
+                  secretProviderClass: release-name-banjo-helm-secret-provider
             - csi:
                 driver: secrets-store.csi.k8s.io
                 readOnly: "true"
                 volumeAttributes:
                   secretProviderClass: my-secret-provider
               name: my-stuff
-          serviceAccountName: release-name-toggle-django-helm
+          serviceAccountName: release-name-banjo-helm
           containers:
             - name: cronjob
               command:
@@ -2001,11 +2001,11 @@ spec:
                   memory: 1Gi
               envFrom:
                 - secretRef:
-                    name: release-name-toggle-django-helm-secret
+                    name: release-name-banjo-helm-secret
                 - secretRef:
                     name: my-custom-secrets
                 - configMapRef:
-                    name: release-name-toggle-django-helm-env-name
+                    name: release-name-banjo-helm-env-name
                 - configMapRef:
                     name: my-custom-envs
               env:
@@ -2017,14 +2017,14 @@ spec:
                       key: special.how
                       name: special-config
               volumeMounts:
-                - name: release-name-toggle-django-helm-secret
+                - name: release-name-banjo-helm-secret
                   mountPath: /mnt/secrets-store
                   readOnly: true
                 - mountPath: /mnt/secrets-store
                   name: my-secret
                   readOnly: true
 ---
-# Source: toggle-django-helm/charts/minio/templates/api-ingress.yaml
+# Source: banjo-helm/charts/minio/templates/api-ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -2052,13 +2052,13 @@ spec:
                 port:
                   name: minio-api
 ---
-# Source: toggle-django-helm/templates/api/ingress.yaml
+# Source: banjo-helm/templates/api/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: release-name-toggle-django-helm-api
+  name: release-name-banjo-helm-api
   labels:
-    app: release-name-toggle-django-helm
+    app: release-name-banjo-helm
     component: api
     environment: ALPHA
     release: release-name
@@ -2072,15 +2072,15 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: release-name-toggle-django-helm-api
+                name: release-name-banjo-helm-api
                 port:
                   number: 80
 ---
-# Source: toggle-django-helm/templates/api/secrets-provider-class.yaml
+# Source: banjo-helm/templates/api/secrets-provider-class.yaml
 apiVersion: secrets-store.csi.x-k8s.io/v1
 kind: SecretProviderClass
 metadata:
-  name: release-name-toggle-django-helm-secret-provider
+  name: release-name-banjo-helm-secret-provider
 spec:
   provider: azure
   parameters:
@@ -2097,7 +2097,7 @@ spec:
           objectName: CELERY-BROKER-URL
           objectType: secret
   secretObjects:
-    - secretName: release-name-toggle-django-helm-secret
+    - secretName: release-name-banjo-helm-secret
       type: Opaque
       data:
         - objectName: CACHE-REDIS-URL
@@ -2105,7 +2105,7 @@ spec:
         - objectName: CELERY-BROKER-URL
           key: CELERY_BROKER_URL
 ---
-# Source: toggle-django-helm/charts/minio/templates/provisioning-job.yaml
+# Source: banjo-helm/charts/minio/templates/provisioning-job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
