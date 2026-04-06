@@ -11,7 +11,9 @@ metadata:
     environment: {{ .Values.environment }}
     release: {{ .Release.Name }}
 spec:
+  {{- if not (eq .Values.api.replicaCount nil) }}
   replicas: {{ .Values.api.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ include "django-app.fullname" . }}
