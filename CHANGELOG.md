@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.8](https://github.com/toggle-corp/banjo-helm/compare/0.2.7..0.2.8) - 2026-04-10
+### Changes:
+
+#### 🐛 Bug Fixes
+
+- Cronjob metadata placement - ([d74154b](https://github.com/toggle-corp/banjo-helm/commit/d74154b65885c4bd59d0d0cab30304a2fbf2f83f))
+
+
 ## [0.2.7](https://github.com/toggle-corp/banjo-helm/compare/0.2.6..0.2.7) - 2026-04-10
 ### Changes:
 
