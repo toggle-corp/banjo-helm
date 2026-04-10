@@ -67,6 +67,9 @@ minio:
   # XXX: Bitnami changes
   image:
     repository: bitnamilegacy/minio
+  volumePermissions:
+    image:
+      repository: bitnamilegacy/os-shell
   global:
     defaultStorageClass:
   apiIngress:
