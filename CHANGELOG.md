@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.7](https://github.com/toggle-corp/banjo-helm/compare/0.2.6..0.2.7) - 2026-04-10
+### Changes:
+
+#### 🐛 Bug Fixes
+
+- Add missing bitnamilegacy/os-shell - ([13d3763](https://github.com/toggle-corp/banjo-helm/commit/13d3763cc61a333dfe983ca6c219a364bc9f5ef2))
+
+
 ## [0.2.6](https://github.com/toggle-corp/banjo-helm/compare/0.2.5..0.2.6) - 2026-04-06
 ### Changes:
 
