@@ -1869,16 +1869,16 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 7200  # 2 hours default
-      metadata:
-        annotations:
-          aws.workload.identity/use: "true"
-          aws.workload.identity/use2: "true"
-          aws.workload.identity/use3: "true"
-        labels:
-          app: release-name-banjo-helm
-          component: cronjob
-          azure.workload.identity/use: "true"
       template:
+        metadata:
+          annotations:
+            aws.workload.identity/use: "true"
+            aws.workload.identity/use2: "true"
+            aws.workload.identity/use3: "true"
+          labels:
+            app: release-name-banjo-helm
+            component: cronjob
+            azure.workload.identity/use: "true"
         spec:
           restartPolicy: "Never"
           volumes:
@@ -1956,16 +1956,16 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 7200  # 2 hours default
-      metadata:
-        annotations:
-          aws.workload.identity/use: "true"
-          aws.workload.identity/use2: "true"
-          aws.workload.identity/use3: "true"
-        labels:
-          app: release-name-banjo-helm
-          component: cronjob
-          azure.workload.identity/use: "true"
       template:
+        metadata:
+          annotations:
+            aws.workload.identity/use: "true"
+            aws.workload.identity/use2: "true"
+            aws.workload.identity/use3: "true"
+          labels:
+            app: release-name-banjo-helm
+            component: cronjob
+            azure.workload.identity/use: "true"
         spec:
           restartPolicy: "Never"
           volumes:
