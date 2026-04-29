@@ -67,6 +67,7 @@ worker:
   queues:
     # NOTE: Make sure keys are lowercase
     default:
+      enabled: false
       resources:
         requests:
           cpu: "0.1"
