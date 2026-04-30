@@ -149,6 +149,7 @@ worker:
     # imagePullSecrets:
   enabled: true
   beat:
+    enabled: false
     image: {}
       # name: WORKER-SET-BY-CICD-IMAGE
       # tag: WORKER-SET-BY-CICD-TAG

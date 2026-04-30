@@ -75,6 +75,7 @@ worker:
     name: ghcr.io/example/example
     tag: v1.0.1
   beat:
+    enabled: true
     resources:
       requests:
         cpu: "0.1"

@@ -1,4 +1,4 @@
-{{- if .Values.worker.enabled }}
+{{- if and .Values.worker.enabled .Values.worker.beat.enabled }}
 
 apiVersion: apps/v1
 kind: Deployment
