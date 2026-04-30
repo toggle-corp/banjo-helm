@@ -1,0 +1,142 @@
+suite: CronJobs tests
+templates:
+  - templates/cronjobs/deployment.yaml
+tests:
+  - it: should render one CronJob per enabled job (filtering disabled ones)
+    set:
+      environment: TEST
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      cronjobs:
+        enabled: true
+        defaultResources:
+          requests:
+            cpu: "1"
+            memory: 1Gi
+          limits:
+            cpu: "1"
+            memory: 2Gi
+        jobs:
+          dummy-01:
+            enabled: true
+            schedule: "0 0 * * *"
+            command: ["./manage.py", "run-dummy-command", "01"]
+          dummy-02:
+            enabled: true
+            schedule: "0 0 * * *"
+            timeZone: "Asia/Kathmandu"
+            command: ["./manage.py", "run-dummy-command", "02"]
+          dummy-03:
+            enabled: false
+            schedule: "* * * * *"
+            command: ["./manage.py", "run-dummy-command", "03"]
+    asserts:
+      - hasDocuments:
+          count: 2
+
+  - it: should render CronJob with schedule, timeZone and command
+    documentSelector:
+      path: metadata.labels.jobName
+      value: dummy-02
+    set:
+      environment: TEST
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      cronjobs:
+        enabled: true
+        jobs:
+          dummy-02:
+            enabled: true
+            schedule: "0 0 * * *"
+            timeZone: "Asia/Kathmandu"
+            command: ["./manage.py", "run-dummy-command", "02"]
+    asserts:
+      - isKind:
+          of: CronJob
+      - isAPIVersion:
+          of: batch/v1
+      - equal:
+          path: metadata.labels.component
+          value: cronjob
+      - equal:
+          path: metadata.labels.jobName
+          value: dummy-02
+      - equal:
+          path: metadata.labels.environment
+          value: TEST
+      - equal:
+          path: spec.schedule
+          value: "0 0 * * *"
+      - equal:
+          path: spec.timeZone
+          value: "Asia/Kathmandu"
+      - equal:
+          path: spec.concurrencyPolicy
+          value: Forbid
+      - equal:
+          path: spec.jobTemplate.spec.activeDeadlineSeconds
+          value: 7200
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.restartPolicy
+          value: Never
+      - equal:
+          path: spec.jobTemplate.spec.template.spec.containers[0].command
+          value: ["./manage.py", "run-dummy-command", "02"]
+
+  - it: should not set timeZone when not provided
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      cronjobs:
+        enabled: true
+        jobs:
+          dummy-01:
+            enabled: true
+            schedule: "0 0 * * *"
+            command: ["./manage.py", "run-dummy-command"]
+    asserts:
+      - notExists:
+          path: spec.timeZone
+
+  - it: should override activeDeadlineSeconds with job.timeLimit
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      cronjobs:
+        enabled: true
+        jobs:
+          dummy-01:
+            enabled: true
+            schedule: "0 0 * * *"
+            command: ["./manage.py"]
+            timeLimit: 3600
+    asserts:
+      - equal:
+          path: spec.jobTemplate.spec.activeDeadlineSeconds
+          value: 3600
+
+  - it: should not render when cronjobs.enabled is false
+    set:
+      cronjobs:
+        enabled: false
+        jobs:
+          dummy-01:
+            enabled: true
+            schedule: "0 0 * * *"
+            command: ["./manage.py"]
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render when cronjobs.jobs is empty
+    set:
+      cronjobs:
+        enabled: true
+        jobs: {}
+    asserts:
+      - hasDocuments:
+          count: 0

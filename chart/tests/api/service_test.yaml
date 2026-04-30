@@ -1,0 +1,41 @@
+suite: API Service tests
+templates:
+  - templates/api/service.yaml
+tests:
+  - it: should render ClusterIP Service with targetPort from api.containerPort
+    set:
+      environment: TEST
+      api:
+        enabled: true
+        containerPort: 8080
+    asserts:
+      - isKind:
+          of: Service
+      - isAPIVersion:
+          of: v1
+      - equal:
+          path: metadata.labels.environment
+          value: TEST
+      - equal:
+          path: metadata.labels.component
+          value: api
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - equal:
+          path: spec.ports[0].port
+          value: 80
+      - equal:
+          path: spec.ports[0].targetPort
+          value: 8080
+      - equal:
+          path: spec.ports[0].protocol
+          value: TCP
+
+  - it: should not render when api.enabled is false
+    set:
+      api:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

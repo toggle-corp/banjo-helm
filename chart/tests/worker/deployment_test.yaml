@@ -1,0 +1,154 @@
+suite: Worker Deployment tests
+templates:
+  - templates/worker/deployment.yaml
+  - templates/config/secret.yaml
+  - templates/config/configmap.yaml
+tests:
+  - it: should render one Deployment per enabled queue
+    template: templates/worker/deployment.yaml
+    set:
+      environment: TEST
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      worker:
+        enabled: true
+        queueCommandPrefix: ["celery", "-A", "myapp", "worker", "-l", "INFO"]
+        queues:
+          default:
+            enabled: true
+            celeryArgs: ["-Q", "celery"]
+          heavy:
+            enabled: true
+            celeryArgs: ["-Q", "heavy"]
+          disabled-queue:
+            enabled: false
+            celeryArgs: ["-Q", "disabled"]
+    asserts:
+      - hasDocuments:
+          count: 2
+
+  - it: should render Deployment with queue label, command prefix + celeryArgs and image
+    template: templates/worker/deployment.yaml
+    documentSelector:
+      path: metadata.labels.queue
+      value: default
+    set:
+      environment: TEST
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      worker:
+        enabled: true
+        queueCommandPrefix: ["celery", "-A", "myapp", "worker", "-l", "INFO"]
+        queues:
+          default:
+            enabled: true
+            celeryArgs: ["-Q", "celery", "--concurrency", "4"]
+    asserts:
+      - isKind:
+          of: Deployment
+      - isAPIVersion:
+          of: apps/v1
+      - equal:
+          path: metadata.labels.component
+          value: worker
+      - equal:
+          path: metadata.labels.queue
+          value: default
+      - equal:
+          path: metadata.labels.environment
+          value: TEST
+      - equal:
+          path: spec.template.spec.containers[0].command
+          value:
+            - celery
+            - -A
+            - myapp
+            - worker
+            - -l
+            - INFO
+            - -Q
+            - celery
+            - --concurrency
+            - "4"
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "ghcr.io/example/app:v1"
+
+  - it: should use queueDefaultResources when queue resources not set
+    template: templates/worker/deployment.yaml
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      worker:
+        enabled: true
+        queueDefaultResources:
+          requests:
+            cpu: "1"
+            memory: 1Gi
+          limits:
+            cpu: "1"
+            memory: 2Gi
+        queues:
+          default:
+            enabled: true
+            celeryArgs: ["-Q", "celery"]
+            resources: {}
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.cpu
+          value: "1"
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 2Gi
+
+  - it: should override image with worker.image
+    template: templates/worker/deployment.yaml
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      worker:
+        enabled: true
+        image:
+          name: ghcr.io/example/worker
+          tag: v2
+        queues:
+          default:
+            enabled: true
+            celeryArgs: ["-Q", "celery"]
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "ghcr.io/example/worker:v2"
+
+  - it: should not render when worker.enabled is false
+    template: templates/worker/deployment.yaml
+    set:
+      worker:
+        enabled: false
+        queues:
+          default:
+            enabled: true
+            celeryArgs: ["-Q", "celery"]
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render when no queues are enabled
+    template: templates/worker/deployment.yaml
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      worker:
+        enabled: true
+        queues:
+          default:
+            enabled: false
+            celeryArgs: ["-Q", "celery"]
+    asserts:
+      - hasDocuments:
+          count: 0

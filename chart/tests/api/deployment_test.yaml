@@ -1,0 +1,81 @@
+suite: API Deployment tests
+templates:
+  - templates/api/deployment.yaml
+  - templates/config/secret.yaml
+  - templates/config/configmap.yaml
+tests:
+  - it: should render Deployment with image, port, command and labels
+    template: templates/api/deployment.yaml
+    set:
+      environment: TEST
+      image:
+        name: ghcr.io/example/app
+        tag: v1.0.0
+      api:
+        enabled: true
+        containerPort: 80
+        command: ["/code/deploy/run_prod.sh"]
+    asserts:
+      - isKind:
+          of: Deployment
+      - isAPIVersion:
+          of: apps/v1
+      - equal:
+          path: metadata.labels.environment
+          value: TEST
+      - equal:
+          path: metadata.labels.component
+          value: api
+      - equal:
+          path: metadata.labels.release
+          value: RELEASE-NAME
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "ghcr.io/example/app:v1.0.0"
+      - equal:
+          path: spec.template.spec.containers[0].ports[0].containerPort
+          value: 80
+      - equal:
+          path: spec.template.spec.containers[0].command
+          value: ["/code/deploy/run_prod.sh"]
+      - notExists:
+          path: spec.replicas
+
+  - it: should set replicas when api.replicaCount is set
+    template: templates/api/deployment.yaml
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      api:
+        enabled: true
+        replicaCount: 3
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 3
+
+  - it: should override image with api.image
+    template: templates/api/deployment.yaml
+    set:
+      image:
+        name: ghcr.io/example/app
+        tag: v1
+      api:
+        enabled: true
+        image:
+          name: ghcr.io/example/api
+          tag: v2
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "ghcr.io/example/api:v2"
+
+  - it: should not render when api.enabled is false
+    template: templates/api/deployment.yaml
+    set:
+      api:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

@@ -1,0 +1,79 @@
+suite: API Ingress tests
+templates:
+  - templates/api/ingress.yaml
+tests:
+  - it: should render Ingress with host and ingressClassName
+    set:
+      environment: TEST
+      ingress:
+        enabled: true
+        host: myapp.example.com
+        className: nginx
+    asserts:
+      - isKind:
+          of: Ingress
+      - isAPIVersion:
+          of: networking.k8s.io/v1
+      - equal:
+          path: metadata.labels.environment
+          value: TEST
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+      - equal:
+          path: spec.rules[0].host
+          value: myapp.example.com
+      - equal:
+          path: spec.rules[0].http.paths[0].path
+          value: /
+      - equal:
+          path: spec.rules[0].http.paths[0].pathType
+          value: Prefix
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 80
+      - notExists:
+          path: spec.tls
+
+  - it: should render TLS block when ingress.tls.enabled is true
+    set:
+      ingress:
+        enabled: true
+        host: myapp.example.com
+        className: nginx
+        tls:
+          enabled: true
+          secretName: my-tls-secret
+    asserts:
+      - equal:
+          path: spec.tls[0].secretName
+          value: my-tls-secret
+      - equal:
+          path: spec.tls[0].hosts[0]
+          value: myapp.example.com
+
+  - it: should propagate ingress annotations and labels
+    set:
+      ingress:
+        enabled: true
+        host: myapp.example.com
+        className: nginx
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+        labels:
+          team: platform
+    asserts:
+      - equal:
+          path: metadata.annotations["nginx.ingress.kubernetes.io/proxy-body-size"]
+          value: "50m"
+      - equal:
+          path: metadata.labels.team
+          value: platform
+
+  - it: should not render when ingress.enabled is false
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
