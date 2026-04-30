@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.3.0](https://github.com/toggle-corp/banjo-helm/compare/0.2.8..0.3.0) - 2026-04-30
+### Changes:
+
+#### 🚀  Features
+
+- *(ci)* Add helm unit test ci check - ([7b43ccc](https://github.com/toggle-corp/banjo-helm/commit/7b43cccf63777cac594fd4d43a713e02824c320b))
+- *(test)* Add extraManifests tests - ([b0602f2](https://github.com/toggle-corp/banjo-helm/commit/b0602f2a54e0e6a92587ae2519a0172053e8a81c))
+- *(test)* Add unit test for secret and secretsStoreCsiDriver - ([b7cd376](https://github.com/toggle-corp/banjo-helm/commit/b7cd3760f4e43af6f3356c9a39f6d687cd418685))
+- *(test)* Add unit test for configmap - ([2c92a62](https://github.com/toggle-corp/banjo-helm/commit/2c92a627f5e7e9634e27df581fa3265638f27aea))
+
+#### 🧪 Testing
+
+- Add tests - ([46b03cb](https://github.com/toggle-corp/banjo-helm/commit/46b03cbcc31b0f7bd5fff75b66309a66d60b6338))
+
+#### ⚙️ Miscellaneous Tasks
+
+- Add justfile helper for installing helm-unittest - ([2afb4e7](https://github.com/toggle-corp/banjo-helm/commit/2afb4e71bde408c4aacf86ac60a829faf11ed9b5))
+
+#### Worker
+
+- Add enable flag for beat and queue ([#9](https://github.com/toggle-corp/banjo-helm/issues/9)) - ([d0dedaf](https://github.com/toggle-corp/banjo-helm/commit/d0dedaf7f34ac7231476c138ba5c02b17a69463c))
+
+### 🍻 Pull Requests (2)
+- (#6) [Feature/helm unit test](https://github.com/toggle-corp/banjo-helm/pull/6)
+- (#9) [Worker: Add enable flag for beat and queue](https://github.com/toggle-corp/banjo-helm/pull/9)
+
+### :tada: New Contributors (1)
+
+- [@susilnem](https://github.com/susilnem) made their first contribution
+
 ## [0.2.8](https://github.com/toggle-corp/banjo-helm/compare/0.2.7..0.2.8) - 2026-04-10
 ### Changes:
 
@@ -111,7 +141,7 @@
 - (#1) [Feat: allow object for extraManifests](https://github.com/toggle-corp/banjo-helm/pull/1)
 
 
-## [0.2.0](https://github.com/toggle-corp/banjo-helm/compare/0.1.0-dev1..0.2.0) - 2025-08-20
+## [0.2.0] - 2025-08-20
 ### Changes:
 
 #### 🚀  Features
